@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import io from 'socket.io-client';
+import io from '../../node_modules/socket.io-client';
 import { USER_CONNECTED } from '../Events.js';
-import { LOGUOUT } from '..Events.js';
+import { LOGOUT } from '../Events.js';
 import LoginForm from './LoginForm';
-
-const socketUrl = 'http://localhost:3000/';
+const socketUrl = 'http://localhost:3000';
 
 export default class Layout extends Component {
   constructor(props) {
@@ -42,7 +41,7 @@ export default class Layout extends Component {
   };
 
   render() {
-    const { title } = this.props;
+    const { socket } = this.state;
     return (
       <div className='container'>
         <LoginForm socket={ socket } setUser={ this.setUser } />
