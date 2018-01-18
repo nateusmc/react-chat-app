@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
+import { USER_CONNECTED } from '../Events.js';
+import { LOGUOUT } from '..Events.js';
 
 const socketUrl = 'http://localhost:3000/';
 
@@ -9,6 +11,7 @@ export default class Layout extends Component {
 
     this.state = {
       socket: null,
+      user: null,
     };
   }
 
@@ -23,6 +26,18 @@ export default class Layout extends Component {
     });
 
     this.setState({ socket });
+  };
+
+  setUser = user => {
+    const { socket } = this.state;
+    socket.emit(USER_CONNECTED, user);
+    this.setState({ user });
+  };
+
+  logout = () => {
+    const { socket } = this.state;
+    socket.emit(LOGOUT);
+    this.setState({ user: null });
   };
 
   render() {
